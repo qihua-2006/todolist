@@ -117,3 +117,27 @@ h1 {
 .stats span {
     margin: 0 15px;
 }
+.filter-section{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+
+}
+.filter-btn{
+    padding: 8px 20px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+}
+.filter-btn.active{
+    background: #667eea;
+    color: wihte;
+}
+.filter-btn:hover{
+    transform: translateY(-2px);
+}
