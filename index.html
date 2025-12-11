@@ -13,18 +13,24 @@
             <input type="text" id="todoInput" placeholder="添加新的待办...">
             <button id="addBtn">添加</button>
         </div>
+        <!--搜索框放在这里-->
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="搜索待办（实施筛选）..."
+                oninput="searchTodos()">
+        </div>
+        <!--筛选按钮放在这里-->
+        <div class="filter-section">
+            <button class="filter-btn active" onclick="filterTodos('all', event)">全部</button>
+            <button class="filter-btn" onclick="filterTodos('active', event)">未完成</button>
+            <button class="filter-btn" onclick="filterTodos('completed', event)">已完成</button>
+        </div>
         <ul id="todoList"></ul>
         <div class="stats">
             <span>总计：<strong id="total">0</strong></span>
             <span>已完成：<strong id="completed">0</strong></span>
         </div>
     </div>
-     <div class="filter-section">
-        <button class="filter-btn active" onclick="filterTodos('all', event)">全部</button>
-        <button class="filter-btn" onclick="filterTodos('active', event)">未完成</button>
-        <button class="filter-btn" onclick="filterTodos('completed', event)">已完成</button>
-    </div>
-    <script src="app.js"></script>
+    <script src="app.js"></script><!--script必须在最后-->
    
 </body>
 </html>

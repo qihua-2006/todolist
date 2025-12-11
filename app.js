@@ -44,13 +44,20 @@ function addTodo() {
 function renderTodos() {
     todoList.innerHTML = '';
 
-    //根据当前筛选状态过滤数据
-    const filtered = todos.filter(todo => {
+    //第一步：先根据筛选按钮过滤（全部/未完成/已完成）
+    let filtered = todos.filter(todo => {
         if (currentFilter === 'all') return true;
         if (currentFilter === 'active') return !todo.completed;
         if (currentFilter === 'completed') return todo.completed;
     });
     
+    //第二步：再根据搜索框关键词过滤
+    const keyword = document.getElementById('searchInput').value;
+    if (keyword) {  // 如果搜索框有内容，继续过滤
+        filtered = filtered.filter(todo => todo.text.includes(keyword));
+    }
+    
+    //第三步：渲染最终过滤结果
     filtered.forEach(todo => {
         const li = document.createElement('li');
         li.className = 'todo-item' + (todo.completed ? ' completed' : '');
@@ -65,7 +72,7 @@ function renderTodos() {
         todoList.appendChild(li);
     });
     
-    updateStats();  //确保统计总是更新
+    updateStats();
 }
 
 //切换完成状态
@@ -98,6 +105,8 @@ function saveTodos() {
 
 //筛选函数
 function filterTodos(filter, event) {
+    //清空搜索框，避免互相干扰
+    //document.getElementById('searchInput').value='';
     //更新按钮状态
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -109,4 +118,23 @@ function filterTodos(filter, event) {
     
     //重新渲染
     renderTodos();
+}
+function searchTodos() {
+    const keyword = document.getElementById('searchInput').value;
+    const filtered = todos.filter(todo => {
+        return todo.text.includes(keyword);
+    });
+    todoList.innerHTML = '';
+    filtered.forEach(todo => {
+        const li = document.createElement('li');
+        li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+        li.innerHTML = `
+            <input type="checkbox" ${todo.completed ? 'checked' : ''} 
+                   onchange='toggleTodo(${todo.id})'>
+            <span>${todo.text}</span>
+            <button class="delete-btn" onclick="deleteTodo(${todo.id})">删除</button>
+        `;
+        todoList.appendChild(li);
+    });
+    updateStats();
 }
